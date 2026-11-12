@@ -395,6 +395,16 @@ section[id] { scroll-margin-top: calc(var(--header) + 0.6rem); }
 .contact-copy h2,
 .practice-copy h2 {
   font-size: clamp(3rem, 6vw, 5.4rem);
+  line-height: 1.05;
+  margin-bottom: 1.35rem;
+  padding-block: 0.08em 0.12em;
+  overflow: visible;
+}
+
+.practice-copy h2 + p,
+.contact-copy h2 + p,
+.section-intro h2 + .lede {
+  margin-top: 0.15rem;
 }
 
 .lede {
@@ -582,9 +592,15 @@ section[id] { scroll-margin-top: calc(var(--header) + 0.6rem); }
   align-items: center;
 }
 
-.practice-copy p + p { margin-top: 1rem; }
+.practice-copy .kicker { margin-bottom: 1.1rem; }
 
-.practice-copy p { color: var(--muted); max-width: 42rem; }
+.practice-copy p + p { margin-top: 1.15rem; }
+
+.practice-copy p {
+  color: var(--muted);
+  max-width: 42rem;
+  line-height: 1.7;
+}
 
 .portrait {
   margin: 0;
