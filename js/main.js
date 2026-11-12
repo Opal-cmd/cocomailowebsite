@@ -82,7 +82,9 @@
     if (!reduce) {
       parallax.forEach(function (img) {
         var rect = img.getBoundingClientRect();
-        var shift = (rect.top - window.innerHeight * 0.45) * -0.07;
+        if (rect.bottom < -80 || rect.top > window.innerHeight + 80) return;
+        var shift = (rect.top - window.innerHeight * 0.45) * -0.06;
+        shift = Math.max(-36, Math.min(36, shift));
         img.style.setProperty("--py", shift.toFixed(1) + "px");
       });
     }
