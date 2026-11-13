@@ -8,6 +8,12 @@
   --gold: #d4af37;
   --muted: #4d5c4b;
   --line: rgba(44, 62, 45, 0.16);
+  --task-strategy: #c94a3c;
+  --task-growth: #e07a2f;
+  --task-revops: #d4a017;
+  --task-ecom: #3f8f5a;
+  --task-product: #3b6ea5;
+  --task-brand: #7a4f9a;
   --serif: "Cormorant Garamond", "Palatino Linotype", Palatino, Georgia, serif;
   --sans: "DM Sans", "Segoe UI", sans-serif;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -414,6 +420,47 @@ section[id] { scroll-margin-top: calc(var(--header) + 0.6rem); }
   font-size: 1.08rem;
 }
 
+.task-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1rem;
+  margin: 1.35rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.task-key li,
+.task-tags li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--forest);
+}
+
+.task-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  background: var(--task, var(--terra));
+}
+
+.task-strategy { --task: var(--task-strategy); }
+.task-growth { --task: var(--task-growth); }
+.task-revops { --task: var(--task-revops); }
+.task-ecom { --task: var(--task-ecom); }
+.task-product { --task: var(--task-product); }
+.task-brand { --task: var(--task-brand); }
+
+.task-key .label,
+.task-tags .label {
+  font-weight: 500;
+  color: var(--forest);
+}
+
 .service-list {
   list-style: none;
   margin: 0;
@@ -424,8 +471,10 @@ section[id] { scroll-margin-top: calc(var(--header) + 0.6rem); }
 }
 
 .service {
+  --task: var(--terra);
   background: var(--card);
   border: 1px solid var(--line);
+  border-top: 3px solid var(--task);
   padding: 1.5rem 1.4rem 1.6rem;
   min-height: 100%;
   transition: transform 0.8s var(--ease), box-shadow 0.8s var(--ease);
@@ -437,7 +486,7 @@ section[id] { scroll-margin-top: calc(var(--header) + 0.6rem); }
   width: 2.2rem;
   height: 1px;
   margin-bottom: 1.15rem;
-  background: var(--terra);
+  background: var(--task);
   transition: width 0.8s var(--ease);
 }
 
@@ -448,11 +497,25 @@ section[id] { scroll-margin-top: calc(var(--header) + 0.6rem); }
 
 .service:hover::before { width: 4.6rem; }
 
-.service .num { display: block; margin-bottom: 0.7rem; font-size: 1.75rem; }
+.service .num {
+  display: block;
+  margin-bottom: 0.7rem;
+  font-size: 1.75rem;
+  color: var(--task);
+}
 
 .service h3 { font-size: 2.15rem; margin-bottom: 0.7rem; }
 
 .service p { color: var(--muted); }
+
+.task-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.9rem;
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+}
 
 .work { padding-top: 0; background: var(--cream-deep); }
 
