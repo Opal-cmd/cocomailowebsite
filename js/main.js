@@ -100,6 +100,30 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   paint();
 
+  var services = document.querySelectorAll(".service");
+  services.forEach(function (service) {
+    var toggleBtn = service.querySelector(".service-toggle");
+    var panel = service.querySelector(".service-desc");
+    if (!toggleBtn || !panel) return;
+
+    toggleBtn.addEventListener("click", function () {
+      var open = toggleBtn.getAttribute("aria-expanded") === "true";
+      services.forEach(function (other) {
+        var otherBtn = other.querySelector(".service-toggle");
+        var otherPanel = other.querySelector(".service-desc");
+        if (!otherBtn || !otherPanel) return;
+        otherBtn.setAttribute("aria-expanded", "false");
+        otherPanel.hidden = true;
+        other.classList.remove("is-open");
+      });
+      if (!open) {
+        toggleBtn.setAttribute("aria-expanded", "true");
+        panel.hidden = false;
+        service.classList.add("is-open");
+      }
+    });
+  });
+
   if (!form || !confirmBox) return;
 
   var preview = document.getElementById("note-preview");
