@@ -9,6 +9,19 @@
 
   document.documentElement.classList.add("js");
 
+  var hero = document.querySelector(".hero");
+  if (hero) {
+    if (reduce) {
+      hero.classList.add("is-ready");
+    } else {
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          hero.classList.add("is-ready");
+        });
+      });
+    }
+  }
+
   function closeMenu() {
     if (!toggle || !nav) return;
     toggle.setAttribute("aria-expanded", "false");
@@ -101,25 +114,72 @@
   paint();
 
   var services = document.querySelectorAll(".service");
+
+  function closeService(service) {
+    var btn = service.querySelector(".service-toggle");
+    var panel = service.querySelector(".service-desc");
+    if (!btn || !panel) return;
+    if (!service.classList.contains("is-open")) return;
+
+    btn.setAttribute("aria-expanded", "false");
+    service.classList.remove("is-open");
+    panel.setAttribute("aria-hidden", "true");
+
+    if (reduce) {
+      panel.hidden = true;
+      return;
+    }
+
+    var done = false;
+    function finish() {
+      if (done || service.classList.contains("is-open")) return;
+      done = true;
+      panel.hidden = true;
+      panel.removeEventListener("transitionend", onEnd);
+    }
+    function onEnd(event) {
+      if (event.target !== panel) return;
+      if (event.propertyName !== "grid-template-rows" && event.propertyName !== "opacity") return;
+      finish();
+    }
+    panel.addEventListener("transitionend", onEnd);
+    window.setTimeout(finish, 700);
+  }
+
+  function openService(service) {
+    var btn = service.querySelector(".service-toggle");
+    var panel = service.querySelector(".service-desc");
+    if (!btn || !panel) return;
+
+    panel.hidden = false;
+    panel.setAttribute("aria-hidden", "false");
+    btn.setAttribute("aria-expanded", "true");
+
+    if (reduce) {
+      service.classList.add("is-open");
+      return;
+    }
+
+    panel.getBoundingClientRect();
+    service.classList.add("is-open");
+  }
+
   services.forEach(function (service) {
     var toggleBtn = service.querySelector(".service-toggle");
     var panel = service.querySelector(".service-desc");
     if (!toggleBtn || !panel) return;
 
+    panel.setAttribute("aria-hidden", "true");
+
     toggleBtn.addEventListener("click", function () {
       var open = toggleBtn.getAttribute("aria-expanded") === "true";
       services.forEach(function (other) {
-        var otherBtn = other.querySelector(".service-toggle");
-        var otherPanel = other.querySelector(".service-desc");
-        if (!otherBtn || !otherPanel) return;
-        otherBtn.setAttribute("aria-expanded", "false");
-        otherPanel.hidden = true;
-        other.classList.remove("is-open");
+        if (other !== service) closeService(other);
       });
-      if (!open) {
-        toggleBtn.setAttribute("aria-expanded", "true");
-        panel.hidden = false;
-        service.classList.add("is-open");
+      if (open) {
+        closeService(service);
+      } else {
+        openService(service);
       }
     });
   });
